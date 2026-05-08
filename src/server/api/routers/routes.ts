@@ -28,7 +28,7 @@ export const routesRouter = createTRPCRouter({
         throw new Error("Failed to calculate route");
       }
 
-      const data = await response.json();
-      return data[0] || null;
+      const data = (await response.json()) as unknown[];
+      return data[0] ?? null;
     }),
 });

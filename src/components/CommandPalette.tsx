@@ -28,14 +28,21 @@ interface CommandPaletteProps {
   onPlanTrip: () => void;
   onShowInspiration: () => void;
   onSearchPlaces: () => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function CommandPalette({
   onPlanTrip,
   onShowInspiration,
   onSearchPlaces,
+  open: externalOpen,
+  onOpenChange: externalOnOpenChange,
 }: CommandPaletteProps) {
-  const [open, setOpen] = React.useState(false);
+  const [internalOpen, setInternalOpen] = React.useState(false);
+
+  const open = externalOpen ?? internalOpen;
+  const setOpen = externalOnOpenChange ?? setInternalOpen;
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -74,33 +81,6 @@ export function CommandPalette({
             >
               <Plane className="mr-2 h-4 w-4" />
               <span>Inspiration Feed</span>
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                onSearchPlaces();
-                setOpen(false);
-              }}
-            >
-              <MapPin className="mr-2 h-4 w-4" />
-              <span>Search Places</span>
-            </CommandItem>
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading="Settings">
-            <CommandItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-              <CommandShortcut>⌘Pr</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Billing</span>
-              <CommandShortcut>⌘B</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
-              <CommandShortcut>⌘S</CommandShortcut>
             </CommandItem>
           </CommandGroup>
         </CommandList>

@@ -22,8 +22,8 @@ export const placesRouter = createTRPCRouter({
         throw new Error("Failed to fetch places");
       }
 
-      const data = await response.json();
-      return data.places || [];
+      const data = (await response.json()) as { places?: unknown[] };
+      return data.places ?? [];
     }),
 
   getPlaceDetails: publicProcedure
@@ -40,6 +40,6 @@ export const placesRouter = createTRPCRouter({
         throw new Error("Failed to fetch place details");
       }
 
-      return await response.json();
+      return (await response.json()) as unknown;
     }),
 });
