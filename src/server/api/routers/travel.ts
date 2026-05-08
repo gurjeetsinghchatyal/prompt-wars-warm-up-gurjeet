@@ -3,7 +3,6 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { TravelPreferenceSchema, ItinerarySchema } from "~/lib/schemas";
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
-import { env } from "~/env";
 
 export const travelRouter = createTRPCRouter({
   generateItinerary: publicProcedure
@@ -32,10 +31,10 @@ export const travelRouter = createTRPCRouter({
 
         console.log("Successfully generated itinerary");
         return object;
-      } catch (error: any) {
-        console.error("AI Generation Detailed Error:", JSON.stringify(error, null, 2));
-        console.error("Error Message:", error.message);
-        throw new Error(`AI Error: ${error.message || "Failed to generate itinerary"}`);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Failed to generate itinerary";
+        console.error("AI Generation Detailed Error:", error);
+        throw new Error(`AI Error: ${message}`);
       }
     }),
 });

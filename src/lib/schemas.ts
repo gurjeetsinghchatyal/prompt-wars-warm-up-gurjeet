@@ -31,3 +31,5 @@ export const ItinerarySchema = z.object({
 });
 
 export type Itinerary = z.infer<typeof ItinerarySchema>;
+export type ItineraryItem = z.infer<typeof ItineraryItemSchema>;
+export type DayPlan = z.infer<typeof DayPlanSchema>;

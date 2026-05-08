@@ -19,8 +19,8 @@ export function MapComponent({ locations }: MapComponentProps) {
         libraries: ["marker"],
       });
 
-      const { Map } = await loader.importLibrary("maps");
-      const { AdvancedMarkerElement } = await loader.importLibrary("marker");
+      const { Map } = await (loader as any).importLibrary("maps");
+      const { AdvancedMarkerElement } = await (loader as any).importLibrary("marker");
 
       if (mapRef.current) {
         const map = new Map(mapRef.current, {

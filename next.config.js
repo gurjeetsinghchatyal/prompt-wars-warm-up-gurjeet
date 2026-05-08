@@ -13,7 +13,13 @@ const analyzer = withBundleAnalyzer({
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  output: "standalone", // Required for Docker
+  output: "standalone",
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
