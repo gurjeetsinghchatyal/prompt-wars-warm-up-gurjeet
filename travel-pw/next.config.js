@@ -4,19 +4,28 @@
  */
 import "./src/env.js";
 
+import withBundleAnalyzer from "@next/bundle-analyzer";
+
+const analyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-
-  /**
-   * If you are using `appDir` then you must comment the below `i18n` config out.
-   *
-   * @see https://github.com/vercel/next.js/issues/41980
-   */
+  output: "standalone", // Required for Docker
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.googleapis.com",
+      },
+    ],
+  },
 };
 
-export default config;
+export default analyzer(config);
